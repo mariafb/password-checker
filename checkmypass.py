@@ -3,6 +3,8 @@ import requests
 import hashlib
 import sys
 
+# Request/ Connect to API
+
 
 def request_api_data(query_char):
     url = 'https://api.pwnedpasswords.com/range/' + query_char
@@ -12,6 +14,11 @@ def request_api_data(query_char):
             f'Error fetching: {res.status_code}, check the api and try again')
     return res
 
+# 1. Match first5_char with existent hashes in API
+# 2. Gets the list of match hashes
+# 3. Loop through previous list to match the tail
+# 4. Output count
+
 
 def get_password_leaks_count(hashes, hash_to_check):
     hashes = (line.split(':') for line in hashes.text.splitlines())
@@ -19,6 +26,10 @@ def get_password_leaks_count(hashes, hash_to_check):
         if h == hash_to_check:
             return count
     return 0
+
+# Get password
+# 1. Hash password using sha1 algorithm
+# 2. Save first5_char and tail
 
 
 def pwned_api_check(password):
@@ -38,6 +49,10 @@ def main(args):
             print(f'{password} was NOT found. Carry on!')
     return 'done!'
 
+
+# Run script if it's the main Script
+# Accept as many arguments as you want
+# Exit once it runs !
 
 if __name__ == '__main__':
     sys.exit(main(sys.argv[1:]))
